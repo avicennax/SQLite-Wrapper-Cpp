@@ -19,6 +19,7 @@ class DBtester {
 		void deleteD();
 		void prompt();
 		void cinFlush();
+		void listTables();
 		int menu;
 		vector <string> cols;
 		vector <string> utility;
@@ -39,7 +40,7 @@ DBtester::DBtester()
 void DBtester::mainLoop()
 {
 	prompt();
-	while (menu != 9)
+	while (menu != 10)
 	{
 		cout << endl << "> ";
 		cin >> menu;
@@ -68,9 +69,12 @@ void DBtester::mainLoop()
 				deleteD();
 				break;
 			case 8:
-				prompt();
+				listTables();
 				break;
 			case 9:
+				prompt();
+				break;
+			case 10:
 				return;
 				break;
 			default:
@@ -94,7 +98,7 @@ void DBtester::queryD()
 void DBtester::addTable()
 {
 	cout << "Enter table name > ";
-	getline(cin, multi);
+	getline(cin, multi2);
 	cinFlush();
 	while (multi2 != "EOF")
 	{
@@ -261,6 +265,12 @@ void DBtester::deleteD()
 	bools.clear();
 }
 
+void DBtester::listTables()
+{
+	test.listTables();
+	return;
+}
+
 void DBtester::cinFlush()
 {
 	cin.clear();
@@ -277,8 +287,9 @@ void DBtester::prompt()
 	cout << "5) INSERT" << endl;
 	cout << "6) UPDATE" << endl;
 	cout << "7) DELETE" << endl;
-	cout << "8) (prompt)" << endl;
-	cout << "9) (exit)" << endl;
+	cout << "8) List Tables" << endl;
+	cout << "9) Prompt" << endl;
+	cout << "10) (exit)" << endl;
 }
 
 int main(int argc, char** argv) {
