@@ -14,7 +14,7 @@ Database::Database(int verb, string dbNam)
 	recordNum = 0;
 	qrSize = 0;
 	errorMs = "NULL";
-	dbPrompt = "Sqlite3Wrapper::Database - ";
+	dbPrompt = "Sqlite3Wrapper::Database  ";
 	if (verb >= 0 && verb <= 2)
 		verbose = verb;
 	else

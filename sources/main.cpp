@@ -98,7 +98,7 @@ void DBtester::queryD()
 void DBtester::addTable()
 {
 	cout << "Enter table name > ";
-	getline(cin, multi2);
+	getline(cin, multi);
 	cinFlush();
 	while (multi2 != "EOF")
 	{
