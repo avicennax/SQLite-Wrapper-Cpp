@@ -34,7 +34,7 @@
 #include "sqlite3.h"
 #include "SQLite-Wrapper.h"
 
-#define _DEBUG_
+//#define _DEBUG_
 
 using namespace std;
 using namespace sqlite3Wrapper;
