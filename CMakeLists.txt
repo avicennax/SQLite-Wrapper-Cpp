@@ -4,7 +4,7 @@ project(SQLite-Wrapper)
 add_definitions("-g3 -static-libgcc -std=c++0x")
 include_directories("${PROJECT_SOURCE_DIR}/includes")
 
-set(BINARYNAME sqlite3Wrapper-tester)
+set(BINARYNAME sqltest)
 add_library(SQLite-Wrapper sources/sqlite3.c sources/SQLite-Wrapper.cpp)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "build")

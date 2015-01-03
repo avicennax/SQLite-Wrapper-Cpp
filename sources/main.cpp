@@ -89,9 +89,11 @@ void DBtester::mainLoop()
 
 void DBtester::queryD()
 {
+	sqlwrap::Database x;
+	x = test;
 	cout << "Enter query > ";
 	getline(cin, multi);			
-	test.queryDB(multi);
+	x.queryDB(multi);
 	cinFlush();
 }
 

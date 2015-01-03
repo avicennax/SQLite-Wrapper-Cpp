@@ -1,20 +1,48 @@
+/* ***
+	===========================================================================
+			SQLite-Wrapper: A simple C++ Wrapper for sqlite3 API
+	===========================================================================
+	
+		-- Introduction --	
+	
+	The 'Database' class provides a C++ wrapper object for SQL databases, 
+	that allows developers to load, access and query a database via 'Database'
+	member functions. The 'Database' class provides two major avenues for SQL 
+	database queries: queryDB() and	four specialized query member functions, 
+	selectDB(), insertDB(), updateDB() and deleteDB(). The queryDB() method
+	takes a single std::string parameter, which is a syntactically and semantically
+	complete SQL query, and runs it against the target database. The four 
+	specialized query methods take set(s) of std::vector<string> and std::string
+	parameters containing values relevant to the query. These methods are best used
+	when query values are derived from external sources, thus removing the need to
+	construct ones own syntactically complete query statements. 
+	
+	SELECT queries executed from either queryDB() or selectDB() will store the
+	returned table in a std::vector<vector<string>> (multidimensional string vector),
+	queryResults, and print	the table via std::cout if specified.
+	
+	Furthermore, two functions texQuo() and expBuild() are provided to assist 
+	the developer in building std::string parameters ready for passing to 
+	'Database' methods.
+	
+*** */	
+ 
 #include <iostream>
 #include <iomanip>
 #include <vector>
-#include "SQLite-Wrapper.h"
+#include <cstring>
 #include "sqlite3.h"
+#include "SQLite-Wrapper.h"
+
+#define _DEBUG_
 
 using namespace std;
 using namespace sqlite3Wrapper;
 
 Database::Database(int verb, string dbNam)
+	:errorMs("NULL"), dbPrompt("Sqlite3Wrapper::Database  "),
+	dbLoaded(false), errorMsg(0), recordNum(0), qrSize(0)
 {
-	dbLoaded = false;
-	errorMsg = 0;
-	recordNum = 0;
-	qrSize = 0;
-	errorMs = "NULL";
-	dbPrompt = "Sqlite3Wrapper::Database  ";
 	if (verb >= 0 && verb <= 2)
 		verbose = verb;
 	else
@@ -23,8 +51,21 @@ Database::Database(int verb, string dbNam)
 		cout << "	>> verbose set to default value: 1" << endl;
 		verbose = 1;
 	}
-	if (dbNam != "")
+	if ( !(dbNam.empty()) )
 		loadDB(dbNam);
+}
+
+Database::Database(const Database &obj)
+	:errorMs(obj.errorMs), dbPrompt("Sqlite3Wrapper::Database  "), dbLoaded(obj.dbLoaded), 
+	errorMsg(0), verbose(obj.verbose), recordNum(obj.recordNum), qrSize(obj.qrSize)
+{
+	if (dbLoaded == true)
+		loadDB(obj.dbName);
+	for (int i=0; i<queryResults.size(); i++)
+		for (int j=0; j<queryResults[i].size(); j++)
+		{
+			queryResults[i][j] = obj.queryResults[i][j];
+		}
 }
 
 Database::~Database()
@@ -32,7 +73,32 @@ Database::~Database()
 	sqlite3_close(db);
 }
 
-int Database::setReportStatus(int verb)
+Database& Database::operator=(const Database &obj)
+{
+	if (dbLoaded == true)
+		sqlite3_close(db);
+		
+	errorMs = obj.errorMs;
+	dbPrompt = "Sqlite3Wrapper::Database  ";
+	dbLoaded = obj.dbLoaded;
+	verbose = obj.verbose;
+	recordNum = obj.recordNum;
+	qrSize = obj.qrSize;
+	
+	if (dbLoaded == true)
+		loadDB(obj.dbName);
+	for (int i=0; i<queryResults.size(); i++)
+		for (int j=0; j<queryResults[i].size(); j++)
+		{
+			queryResults[i][j] = obj.queryResults[i][j];
+		}	
+	return *this;
+
+}
+
+
+
+ERROR_CODE Database::setReportStatus(int verb)
 {
 	if (verb >= 0 && verb <= 2)
 		verbose = verb;
@@ -48,7 +114,7 @@ int Database::setReportStatus(int verb)
 	return 0;
 }
 
-int Database::loadDB(string dbName_string)
+ERROR_CODE Database::loadDB(string dbName_string)
 {
 	const char *dbName_const = dbName_string.c_str();
 	int err = sqlite3_open(dbName_const, &db);
@@ -69,7 +135,7 @@ int Database::loadDB(string dbName_string)
 	}
 }
 
-int Database::listTables()
+ERROR_CODE Database::listTables()
 {
 	if (dbLoaded == true)
 	{
@@ -104,7 +170,7 @@ int Database::listTables()
 	}
 }
 
-int Database::createTable(string tableName, vector <string> columns, string key)
+ERROR_CODE Database::createTable(string tableName, vector <string> columns, string key)
 {
 	if (dbLoaded == true)
 	{
@@ -115,6 +181,9 @@ int Database::createTable(string tableName, vector <string> columns, string key)
 			createBase+="	"+columns[i]+",\n";
 		createBase.erase(createBase.end()-2, createBase.end());
 		createBase+="\n);";
+		#ifdef _DEBUG_
+		cout << endl << createBase << endl;
+		#endif
 		const char *createQuery = createBase.c_str();
 		int err = sqlite3_exec(db, createQuery, callbackHandler, this, &errorMsg);
 		if (err != SQLITE_OK)
@@ -141,7 +210,7 @@ int Database::createTable(string tableName, vector <string> columns, string key)
 	
 }
 
-int Database::dropTable(string table)
+ERROR_CODE Database::dropTable(string table)
 {
 	if(dbLoaded == true)
 	{
@@ -171,7 +240,7 @@ int Database::dropTable(string table)
 	}
 }
 
-int Database::queryDB(string queryString)
+ERROR_CODE Database::queryDB(string queryString)
 {
 	if (dbLoaded  == true)
 	{
@@ -211,7 +280,7 @@ int Database::queryDB(string queryString)
 	}
 }
 
-int Database::selectDB(vector<string> columns, vector<string> tables, vector<string> predicates, vector<string> predBools)
+ERROR_CODE Database::selectDB(vector<string> columns, vector<string> tables, vector<string> predicates, vector<string> predBools)
 {
 	if (dbLoaded == true)
 	{
@@ -247,7 +316,9 @@ int Database::selectDB(vector<string> columns, vector<string> tables, vector<str
 			return 4;
 		}
 		queryResReset();
-		//cout << selectBase << endl;
+		#ifdef _DEBUG_
+		cout << endl << selectBase << endl;
+		#endif
 		const char *selectQuery = selectBase.c_str();
 		int err = sqlite3_exec(db, selectQuery, callbackHandler, this, &errorMsg);
 		if (err != SQLITE_OK)
@@ -273,7 +344,7 @@ int Database::selectDB(vector<string> columns, vector<string> tables, vector<str
 	}
 }
 
-int Database::insertDB(string table, vector <string> values, vector <string> paramsOrder)
+ERROR_CODE Database::insertDB(string table, vector <string> values, vector <string> paramsOrder)
 {
 	if (dbLoaded == true)
 	{
@@ -303,6 +374,9 @@ int Database::insertDB(string table, vector <string> values, vector <string> par
 			insertBase+=values[i]+", ";
 		insertBase.erase(insertBase.end()-2, insertBase.end());
 		insertBase+=");";
+		#ifdef _DEBUG_
+		cout << endl << insertBase << endl;
+		#endif
 		const char *insertQuery = insertBase.c_str();
 		int err = sqlite3_exec(db, insertQuery, callbackHandler, this, &errorMsg);
 		if (err != SQLITE_OK)
@@ -328,7 +402,7 @@ int Database::insertDB(string table, vector <string> values, vector <string> par
 	}
 }
 
-int Database::updateDB(string table, vector<string> setClauses, vector<string> predicates, vector<string> predicBools)
+ERROR_CODE Database::updateDB(string table, vector<string> setClauses, vector<string> predicates, vector<string> predicBools)
 {
 	if (dbLoaded == true)
 	{
@@ -357,6 +431,9 @@ int Database::updateDB(string table, vector<string> setClauses, vector<string> p
 			}
 			return 4;
 		}
+		#ifdef _DEBUG_
+		cout << endl << updateBase << endl;
+		#endif
 		const char *updateQuery = updateBase.c_str();
 		int err = sqlite3_exec(db, updateQuery, callbackHandler, this, &errorMsg);
 		if (err != SQLITE_OK)
@@ -383,7 +460,7 @@ int Database::updateDB(string table, vector<string> setClauses, vector<string> p
 
 }
 
-int Database::deleteDB(string table, vector<string> predicates, vector<string> predBools)
+ERROR_CODE Database::deleteDB(string table, vector<string> predicates, vector<string> predBools)
 {
 	if (dbLoaded == true)
 	{
@@ -409,6 +486,9 @@ int Database::deleteDB(string table, vector<string> predicates, vector<string> p
 				return 4;
 		}
 		const char *deleteQuery = deleteBase.c_str();
+		#ifdef _DEBUG_
+		cout << endl << deleteBase << endl;
+		#endif
 		int err = sqlite3_exec(db, deleteQuery, callbackHandler, this, &errorMsg);
 		if (err != SQLITE_OK)
 		{	
@@ -433,14 +513,14 @@ int Database::deleteDB(string table, vector<string> predicates, vector<string> p
 	}
 }
 
-int Database::queryResReset()
+ERROR_CODE Database::queryResReset()
 {
 	recordNum = 0;
 	qrSize = 0;
 	queryResults.clear();
 }
 
-int Database::queryStorer(int argc, char **values, char **field)
+ERROR_CODE Database::queryStorer(int argc, char **values, char **field)
 {
 	qrSize++;
 	queryResults.resize(qrSize);
@@ -505,4 +585,6 @@ string sqlite3Wrapper::expBuild(string column, string value, string expBool)
 	string newString = column+" "+expBool+" "+value;
 	return newString;
 }
+
+
 
