@@ -1,0 +1,52 @@
+﻿Build started 1/18/2015 9:42:39 PM.
+     1>Project "c:\Users\John\documents\visual studio 2013\Projects\SQLite-Wrapper\SQLite-Wrapper\SQLite-Wrapper.vcxproj" on node 2 (Rebuild target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D CODE_ANALYSIS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze /analyze:plugin"C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\\bin\localespc.dll" /errorReport:prompt   /analyze:quiet "..\Source Files\main.cpp" "..\Source Files\SQLite-Wrapper.cpp"
+         SQLite-Wrapper.cpp
+         main.cpp
+         Running Code Analysis for C/C++...
+         Generating Code...
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D CODE_ANALYSIS /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TC /analyze /analyze:plugin"C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\\bin\localespc.dll" /errorReport:prompt   /analyze:quiet "..\Source Files\sqlite3.c"
+         sqlite3.c
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"c:\users\john\documents\visual studio 2013\Projects\SQLite-Wrapper\Debug\SQLite-Wrapper.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"c:\users\john\documents\visual studio 2013\Projects\SQLite-Wrapper\Debug\SQLite-Wrapper.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"c:\users\john\documents\visual studio 2013\Projects\SQLite-Wrapper\Debug\SQLite-Wrapper.lib" /MACHINE:X86 Debug\main.obj
+         "Debug\SQLite-Wrapper.obj"
+         Debug\sqlite3.obj
+         SQLite-Wrapper.vcxproj -> c:\users\john\documents\visual studio 2013\Projects\SQLite-Wrapper\Debug\SQLite-Wrapper.exe
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(35398): warning C6011: Dereferencing NULL pointer 'p'. 
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(35688): warning C6011: Dereferencing NULL pointer 'pFd->pMapRegion'. 
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(37697): warning C6011: Dereferencing NULL pointer 'sqlite3Config.pcache2.xInit'. 
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(38685): warning C28182: Dereferencing NULL pointer. 'pCache->apHash' contains the same NULL value as 'pPage=*pp' did. 
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(42938): warning C28182: Dereferencing NULL pointer. 'pList' contains the same NULL value as '*ppNext=p' did. 
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(49970): warning C6011: Dereferencing NULL pointer 'pLast'. 
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(56227): warning C6011: Dereferencing NULL pointer 'pTrunk'. 
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(57743): warning C6001: Using uninitialized memory 'apCopy'.
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(57743): warning C6385: Reading invalid data from 'apCopy':  the readable size is '12' bytes, but '-4' bytes may be read.
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(60278): warning C6011: Dereferencing NULL pointer '*pp'. 
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(68431): warning C6011: Dereferencing NULL pointer 'pOut'. 
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(75828): warning C6011: Dereferencing NULL pointer 'pChunk'. 
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(76619): warning C28182: Dereferencing NULL pointer. 'pTopNC' contains the same NULL value as 'pNC' did. 
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(76900): warning C28182: Dereferencing NULL pointer. 'pNC' contains the same NULL value as 'pNC2' did. See line 76751 for an earlier location where this can occur
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(78041): warning C6387: 'pToken->z' could be '0':  this does not adhere to the specification for the function 'memcpy'. 
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(78044): warning C6011: Dereferencing NULL pointer 'pToken->z'. 
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(79166): warning C6011: Dereferencing NULL pointer 'p'. 
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(79373): warning C6011: Dereferencing NULL pointer 'pKeyInfo'. 
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(80298): warning C6011: Dereferencing NULL pointer 'pFarg'. 
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(85965): warning C6235: (<non-zero constant> || <expression>) is always a non-zero constant.
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(88476): warning C6011: Dereferencing NULL pointer 'pName'. 
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(93226): warning C6011: Dereferencing NULL pointer 'pIdx'. 
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(93898): warning C6011: Dereferencing NULL pointer 'pTrigger'. 
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(93887): warning C6011: Dereferencing NULL pointer 'pStep'. 
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(95832): warning C6011: Dereferencing NULL pointer 'pDest'. See line 95774 for an earlier location where this can occur
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(95972): warning C6011: Dereferencing NULL pointer 'pSrcIdx'. 
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(104028): warning C28182: Dereferencing NULL pointer. 'pSub' contains the same NULL value as 'pSub->pPrior' did. 
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(105038): warning C6011: Dereferencing NULL pointer 'pList'. 
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(114138): warning C28182: Dereferencing NULL pointer. 'pWC->a' contains the same NULL value as 'pTerm' did. See line 114131 for an earlier location where this can occur
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(114141): warning C6011: Dereferencing NULL pointer 'pTerm'. See line 114131 for an earlier location where this can occur
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(115501): warning C6385: Reading invalid data from 'pFrom->aLoop':  the readable size is '_Old_10`sizeof(WhereLoop *)*iLoop' bytes, but '4' bytes may be read.
+     1>c:\users\john\documents\visual studio 2013\projects\sqlite-wrapper\source files\sqlite3.c(123736): warning C6011: Dereferencing NULL pointer 'db'. 
+     1>Done Building Project "c:\Users\John\documents\visual studio 2013\Projects\SQLite-Wrapper\SQLite-Wrapper\SQLite-Wrapper.vcxproj" (Rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:32.52

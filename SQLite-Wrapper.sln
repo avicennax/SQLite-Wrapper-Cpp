@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SQLite-Wrapper", "SQLite-Wrapper\SQLite-Wrapper.vcxproj", "{89892679-20C1-4ADC-8B4D-03B4E9C33BCF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{89892679-20C1-4ADC-8B4D-03B4E9C33BCF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{89892679-20C1-4ADC-8B4D-03B4E9C33BCF}.Debug|Win32.Build.0 = Debug|Win32
+		{89892679-20C1-4ADC-8B4D-03B4E9C33BCF}.Release|Win32.ActiveCfg = Release|Win32
+		{89892679-20C1-4ADC-8B4D-03B4E9C33BCF}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
