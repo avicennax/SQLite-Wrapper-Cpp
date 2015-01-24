@@ -576,16 +576,14 @@ static int sqlite3Wrapper::callbackHandler(void *databaseObj, int argc, char **v
 	return transDB->queryStorer(argc, values, field);
 }
 
-string sqlite3Wrapper::texQuo(string target)
+inline string sqlite3Wrapper::texQuo(string target)
 {
-	string newString="'"+target+"'";
-	return newString;
+	return "'" + target + "'";
 }
 
-string sqlite3Wrapper::expBuild(string column, string value, string expBool)
+inline string sqlite3Wrapper::expBuild(string column, string value, string expBool)
 {
-	string newString = column+" "+expBool+" "+value;
-	return newString;
+	return column + " " + expBool + " " + value;
 }
 
 
