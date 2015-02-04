@@ -12,6 +12,7 @@ if (MINGW)
 	target_link_libraries (${BINARYNAME} SQLite-Wrapper)
 	
 elseif (MSVC)
+
 	include_directories("${PROJECT_SOURCE_DIR}/includes")
 	set(SOURCES_DIR "Source Files")
 	set(BINARYNAME sqltest)
@@ -20,4 +21,5 @@ elseif (MSVC)
 	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "build")
 	add_executable(${BINARYNAME} ${SOURCES_DIR}/main.cpp)
 	target_link_libraries (${BINARYNAME} SQLite-Wrapper)
-endif (MSVC)
+
+endif ()
