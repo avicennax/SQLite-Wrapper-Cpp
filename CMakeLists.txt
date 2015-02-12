@@ -12,7 +12,7 @@ if (CMAKE_COMPILER_IS_GNUCXX OR CMAKE_COMPILER_IS_GNUCC)
 	target_link_libraries (${BINARYNAME} SQLite-Wrapper)
 	
 elseif (MSVC)
-	include_directories("${PROJECT_SOURCE_DIR}/includes")
+	include_directories("${PROJECT_SOURCE_DIR}/Headers")
 	set(SOURCES_DIR "Source Files")
 	set(BINARYNAME sqltest)
 	add_library(SQLite-Wrapper ${SOURCES_DIR}/sqlite3.c ${SOURCES_DIR}/SQLite-Wrapper.cpp)
