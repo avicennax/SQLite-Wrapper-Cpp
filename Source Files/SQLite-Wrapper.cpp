@@ -2,9 +2,20 @@
 	===========================================================================
 			SQLite-Wrapper: A simple C++ Wrapper for sqlite3 API
 	===========================================================================
-	
-		-- Introduction --	
-	
+*** */
+
+/* ***
+	// Doxygen Documentation
+
+*** */
+
+/*!
+	\mainpage SQLite-Wrapper
+
+	\brief SQLite-Wrapper: A simple C++ Wrapper for sqlite3 API
+
+	\section intro_sec Introduction
+
 	The 'Database' class provides a C++ wrapper object for SQL databases, 
 	that allows developers to load, access and query a database via 'Database'
 	member functions. The 'Database' class provides two major avenues for SQL 
@@ -25,7 +36,7 @@
 	the developer in building std::string parameters ready for passing to 
 	'Database' methods.
 	
-*** */	
+*/	
  
 #include <iostream>
 #include <iomanip>
