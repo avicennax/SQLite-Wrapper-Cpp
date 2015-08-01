@@ -1,5 +1,5 @@
 #SQLite-Wrapper
-##A simple C++ Wrapper for sqlite3 API
+A simple C++ Wrapper for sqlite3 API
 ### Introduction
 The 'Database' class provides a C++ wrapper object for SQL databases, that allows developers
 to load, access and query a database via 'Database' member functions.
