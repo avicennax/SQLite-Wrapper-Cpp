@@ -1,7 +1,9 @@
 #include <iostream>
 #include <stdio.h>
 #include <vector>
-#include "SQLite-Wrapper.h"
+#include <chrono>
+#include <random>
+#include "../Headers/SQLite-Wrapper.h"
 using namespace std;
 namespace sqlwrap = sqlite3Wrapper;
 
@@ -20,6 +22,7 @@ class DBtester {
 		void prompt();
 		void cinFlush();
 		void listTables();
+		void generateEntries();
 		int menu;
 		vector <string> cols;
 		vector <string> utility;
@@ -35,6 +38,7 @@ DBtester::DBtester()
 	test.setReportStatus(2);
 	test.loadDB("test.db");
 	int menu = 0;
+	cout << endl << "DB size: " << sizeof(test) << endl;
 }
 
 void DBtester::mainLoop()
@@ -72,9 +76,12 @@ void DBtester::mainLoop()
 				listTables();
 				break;
 			case 9:
-				prompt();
+				generateEntries();
 				break;
 			case 10:
+				prompt();
+				break;
+			case 11:
 				return;
 				break;
 			default:
@@ -89,12 +96,12 @@ void DBtester::mainLoop()
 
 void DBtester::queryD()
 {
-	sqlwrap::Database x;
-	x = test;
 	cout << "Enter query > ";
 	getline(cin, multi);			
-	x.queryDB(multi);
+	test.queryDB(multi);
 	cinFlush();
+	cout << endl << "DB size: " << sizeof(test) << endl;
+
 }
 
 void DBtester::addTable()
@@ -171,7 +178,8 @@ void DBtester::selectD()
 	cols.clear();
 	utility.clear();
 	preds.clear();
-	bools.clear();	
+	bools.clear();
+	cout << endl << "DB size: " << sizeof(test) << endl;	
 }
 
 void DBtester::insertD()
@@ -267,6 +275,51 @@ void DBtester::deleteD()
 	bools.clear();
 }
 
+void DBtester::generateEntries()
+{
+	cout << "Enter number of entries to generated > ";
+	int genCount;
+	cin >> genCount;
+	if (genCount < 0)
+	{
+		cout << "Entry count less than 0 ...\n" << endl;
+		return;
+	}
+
+	multi = "TEST";
+	cols.push_back("name TEXT");
+	cols.push_back("age REAL");
+	multi2 = "ID REAL";
+	test.createTable(multi, cols, multi2);
+	cols.clear();
+
+	static string charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	unsigned seed = chrono::system_clock::now().time_since_epoch().count();
+	default_random_engine generator(seed);
+	srand(time(NULL));
+	uniform_real_distribution <float> entAge(10, 50);
+	uniform_real_distribution <float> nameLen(4, 10);
+
+	for (int j = 0; j < genCount; j++)
+	{
+		string name;
+		name.resize(int(nameLen(generator)));
+		for (size_t i = 0; i < name.size(); i++)
+			name[i] = charset[rand() % charset.length()];
+		int age = int(entAge(generator));
+		utility.push_back(to_string(j));
+		utility.push_back(to_string(age));
+		utility.push_back("'"+name+"'");
+		cols.push_back("ID");
+		cols.push_back("age");
+		cols.push_back("name");
+		test.insertDB(multi, utility, cols);
+		cols.clear();
+		utility.clear();
+	}
+	return;
+}
+
 void DBtester::listTables()
 {
 	test.listTables();
@@ -290,8 +343,9 @@ void DBtester::prompt()
 	cout << "6) UPDATE" << endl;
 	cout << "7) DELETE" << endl;
 	cout << "8) List Tables" << endl;
-	cout << "9) Prompt" << endl;
-	cout << "10) (exit)" << endl;
+	cout << "9) Generate Entries" << endl;
+	cout << "10) Prompt " << endl;
+	cout << "11) (exit)" << endl;
 }
 
 int main(int argc, char** argv) {
